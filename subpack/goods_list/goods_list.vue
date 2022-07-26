@@ -1,6 +1,7 @@
 <template>
   <view>
     {{ query }}
+    {{ cateId }}
   </view>
 </template>
 
@@ -8,11 +9,13 @@
   export default {
     data() {
       return {
-        query: ''
+        query: '',
+        cateId: ''
       };
     },
     onLoad(options) {
       this.query = options.query
+      this.cateId = options.cateId
     }
   }
 </script>
