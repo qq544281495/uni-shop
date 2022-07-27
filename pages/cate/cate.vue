@@ -1,5 +1,6 @@
 <template>
   <view>
+    <goods-search @searchGoods="searchGoods"></goods-search>
     <view class="cate-box">
       <!-- 左侧滚动栏 -->
         <scroll-view class="left-scroll" scroll-y="true" :style="{ height: scrollHeight + 'px' }">
@@ -39,7 +40,7 @@
     onLoad() {
       // 获取系统信息
       const info = uni.getSystemInfoSync()
-      this.scrollHeight = info.screenHeight
+      this.scrollHeight = info.windowHeight - 40
       this.getCateList()
     },
     methods:{
@@ -49,7 +50,6 @@
         if(res.meta.status !== 200) return uni.$showMessage()
         this.cateList = res.message
         this.secondCate = res.message[0].children
-        console.log(this.secondCate);
       },
       // 切换当前分类
       changeActive(index){
@@ -61,6 +61,12 @@
       gotoGoodsList(index){
         uni.navigateTo({
           url: '/subpack/goods_list/goods_list?cateId=' + index
+        })
+      },
+      // 点击搜索组件跳转搜索页
+      searchGoods(){
+        uni.navigateTo({
+          url: '/subpack/search/search'
         })
       }
     }

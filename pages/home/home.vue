@@ -1,5 +1,9 @@
 <template>
   <view>
+    <!-- 首页搜索 -->
+    <view class="home-search">
+      <goods-search @searchGoods="searchGoods"></goods-search>
+    </view>
     <!-- 轮播图 -->
     <swiper indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <swiper-item v-for="(item,index) in swiperList" :key="item.goods_id">
@@ -48,13 +52,13 @@
       // 获取首页轮播图
       async getSwiperList(){
         const {data : res} = await uni.$http.get('/api/public/v1/home/swiperdata')
-        if(res.meta.status !== 200) return uni.$showMessage
+        if(res.meta.status !== 200) return uni.$showMessage()
         this.swiperList = res.message
       },
       // 获取分类导航
       async getNavList(){
         const { data : res } = await uni.$http.get('/api/public/v1/home/catitems')
-        if(res.meta.status !== 200) return uni.$showMessage
+        if(res.meta.status !== 200) return uni.$showMessage()
         this.navList = res.message
       },
       // 分类导航点击“分类”跳转到分类页面
@@ -68,7 +72,7 @@
       // 获取首页列表数据
       async getFloorList(){
         const { data : res } = await uni.$http.get('/api/public/v1/home/floordata')
-        if(res.meta.status !== 200) return uni.$showMessage
+        if(res.meta.status !== 200) return uni.$showMessage()
         res.message.forEach(floor => {
           floor.product_list.forEach(item => {
             item.url = '/subpack/goods_list/goods_list?' + item.navigator_url.split('?')[1]
@@ -81,12 +85,24 @@
         uni.navigateTo({
           url: item.url
         })
+      },
+      // 点击搜索组件跳转搜索页
+      searchGoods(){
+        uni.navigateTo({
+          url: '/subpack/search/search'
+        })
       }
     }
   }
 </script>
 
 <style lang="scss">
+  // 首页搜索
+  .home-search{
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
   // 轮播图样式
   swiper{
     height: 330 rpx;
