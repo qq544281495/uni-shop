@@ -4,7 +4,7 @@ import { $http } from '@escook/request-miniprogram'
 // 将$http挂载到uni对象上
 uni.$http = $http
 // 设置请求根路径
-$http.baseUrl = 'https://www.uinav.com'
+$http.baseUrl = 'https://api-hmugo-web.itheima.net'
 // 请求前处理事务
 $http.beforeRequest = function(options){
   uni.showLoading({
