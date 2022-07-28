@@ -80,7 +80,9 @@
                     "style" :                                                                                    
                 {
                     "navigationBarTitleText": "商品列表",
-                    "enablePullDownRefresh": false
+                    "enablePullDownRefresh": true, // 开启下拉刷新
+                    "onReachBottomDistance": 100, // 上拉触底距离
+                    "backgroundColor": "#f8f8f8" // 下拉刷新背景色
                 }
                 
                 }
@@ -103,7 +105,8 @@
 		"backgroundColor": "#FFFFFF"
 	},
   "usingComponents": {
-    "goods-search": "./components/goods-search/goods-search"
+    "goods-search": "./components/goods-search/goods-search",
+    "goods-item": "./components/goods-item/goods-item"
   },
 	"uniIdRouter": {}
 }
