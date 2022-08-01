@@ -35,7 +35,9 @@
 </template>
 
 <script>
+  import tabberCart from '@/mixins/tabber-cart.js'
   export default {
+    mixins: [tabberCart],
     data() {
       return {
         swiperList: [],

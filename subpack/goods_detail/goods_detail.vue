@@ -38,6 +38,7 @@
 </template>
 
 <script>
+  import { mapState , mapMutations , mapGetters  } from 'vuex'
   export default {
     data() {
       return {
@@ -51,7 +52,7 @@
           {
             icon: 'cart',
             text: '购物车',
-            info: 1
+            info: 0
           }
         ],
         // 商品导航组件按钮配置信息
@@ -69,7 +70,24 @@
         ]
       };
     },
+    computed: {
+      ...mapState('cart',['cart_info']),
+      ...mapGetters('cart', ['goodsTotal'])
+    },
+    watch: {
+      goodsTotal: {
+        handler(value){
+          const findResult = this.options.find( item => item.text === '购物车')
+          if(findResult){
+            findResult.info = value
+          }
+        },
+        // 页面加载时立即调用一次
+        immediate: true
+      }
+    },
     methods: {
+      ...mapMutations('cart', ['addCart']),
       // 获取商品详情数据
       async getGoodsDetail(goods_id){
         const { data : res } = await uni.$http.get('/api/public/v1/goods/detail', {goods_id})
@@ -77,18 +95,15 @@
         // 正则匹配商品详情中的ima标签改为块级元素同时将webp后缀图片改为jpg
         res.message.goods_introduce = res.message.goods_introduce.replace(/<img /g, '<img style="display:block;" ').replace(/webp/g, 'jpg')
         this.goods_info = res.message
-        console.log(this.goods_info);
       },
       // 点击图片进入预览模式
       showImage(index){
-        console.log(index);
         uni.previewImage({
           current: index, // 进入图片预览模式显示图片索引
           urls: this.goods_info.pics.map( item => item.pics_big )
         })
       },
       onClick (e) {
-      	console.log(e);
         if(e.content.text === '购物车'){
           uni.switchTab({
             url: '/pages/cart/cart'
@@ -96,8 +111,19 @@
         }
       },
       buttonClick (e) {
-      	console.log(e)
-      	this.options[1].info++
+      	if(e.content.text === '加入购物车'){
+          // 组件商品信息对象
+          const goods = {
+            goods_id: this.goods_info.goods_id, // 商品id
+            goods_name: this.goods_info.goods_name, // 商品名
+            goods_price: this.goods_info.goods_price, // 商品的价格
+            goods_count: 1, // 商品的数量
+            goods_small_logo: this.goods_info.goods_small_logo, // 商品的图片
+            goods_state: true // 是否选中商品  
+          }
+          // 添加购物车
+          this.addCart(goods)
+        }
       }
     },
     onLoad(options) {

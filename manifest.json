@@ -56,7 +56,15 @@
             "checkSiteMap" : false,
             "es6" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "permission": {
+          "scope.userLocation": {
+            "desc": "您的位置将用于选择收货地址"
+          }
+        },
+        "requiredPrivateInfos": [
+          "getLocation"
+        ]
     },
     "mp-alipay" : {
         "usingComponents" : true

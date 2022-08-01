@@ -98,6 +98,9 @@
             ]
       }
     ],
+  "requiredPrivateInfos":[
+    "chooseAddress"
+  ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "优购商城",
@@ -106,7 +109,9 @@
 	},
   "usingComponents": {
     "goods-search": "./components/goods-search/goods-search",
-    "goods-item": "./components/goods-item/goods-item"
+    "goods-item": "./components/goods-item/goods-item",
+    "take-address": "/components/take-address/take-address",
+    "goods-settle": "/components/goods-settle/goods-settle"
   },
 	"uniIdRouter": {}
 }

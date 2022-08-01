@@ -1,11 +1,15 @@
 <template>
   <view class="goods-item">
     <view class="goods-image">
-      <image :src="goodsInfo.goods_small_logo || defaultPic"></image>
+      <radio v-if="showRadio" :checked="goodsInfo.goods_state" color="#c00000" @click="radioHandler()"></radio>
+      <image :src="goodsInfo.goods_small_logo || defaultPic" class="goods-pic"></image>
     </view>
     <view class="goods-info">
       <view class="goods-name">{{ goodsInfo.goods_name }}</view>
-      <view class="goods-price">￥ {{ goodsInfo.goods_price | priceFilter }}</view>
+      <view class="goods-price">
+        <text>￥ {{ goodsInfo.goods_price | priceFilter }}</text>
+        <uni-number-box :min="1" v-if="showNumberBox" :value="goodsInfo.goods_count" @change="changeGoodsCount()"></uni-number-box>
+      </view>
     </view>
   </view>
 </template>
@@ -15,6 +19,14 @@
       goodsInfo: {
         type: Object,
         default: {}
+      },
+      showRadio: {
+        type: Boolean,
+        default: false
+      },
+      showNumberBox: {
+        type: Boolean,
+        default: false
       }
     },
     data(){
@@ -28,6 +40,22 @@
         return Number(value).toFixed(2)
       }
     },
+    methods: {
+      // 改变商品选中状态
+      radioHandler(){
+        this.$emit('radioChange',{
+          goods_id: this.goodsInfo.goods_id,
+          goods_state: !this.goodsInfo.goods_state
+        })
+      },
+      // 修改购物车商品数量
+      changeGoodsCount(value){
+        this.$emit('changeGoodsNumber',{
+          goods_id: this.goodsInfo.goods_id,
+          goods_count: Number(value)
+        })
+      }
+    }
   }
 </script>
 <style lang="scss">
@@ -37,6 +65,10 @@
       padding: 8px;
       border-bottom: 1px solid #cfcfcf;
       .goods-image{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-right: 10rpx;
         width: 300rpx;
         height: 240rpx;
         image{
@@ -57,6 +89,9 @@
           line-height: 24px;
         }
         .goods-price{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
           color: #c00000;
         }
       }
