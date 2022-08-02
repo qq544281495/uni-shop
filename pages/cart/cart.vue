@@ -89,7 +89,7 @@
     .empty-text{
       font-size: 18px;
       letter-spacing: 4rpx;
-      color: #888;
+      color: #888888;
     }
   }
 </style>

@@ -111,7 +111,9 @@
     "goods-search": "./components/goods-search/goods-search",
     "goods-item": "./components/goods-item/goods-item",
     "take-address": "/components/take-address/take-address",
-    "goods-settle": "/components/goods-settle/goods-settle"
+    "goods-settle": "/components/goods-settle/goods-settle",
+    "user-info": "/components/user-info/user-info",
+    "not-login": "/components/not-login/not-login"
   },
 	"uniIdRouter": {}
 }
